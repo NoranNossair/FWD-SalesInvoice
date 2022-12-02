@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Model;
 
 /**
@@ -9,20 +6,27 @@ package Model;
  * @author Noran Nossair
  */
 public class Invoice_Line {
-    
+            
             private String product;
             private double price;
             private int count;
             private Invoice_Header inv;
 
-    public Invoice_Line(String product, double price, int count, Invoice_Header inv) {
+    public Invoice_Line() {
+    }
+            
+            
+
+    public Invoice_Line( String product, double price, int count, Invoice_Header inv) {
+        
         this.product = product;
         this.price = price;
         this.count = count;
         this.inv = inv;
     }
-    public double getTotal(){
+    public double getLineTotal(){
         return count*price;
+        
     }
 
     public Invoice_Header getInv() {
@@ -61,19 +65,11 @@ public class Invoice_Line {
     public String toString() {
         return "Invoice_Line{" + "num=" + inv.getCstID()+ "product=" + product + ", price=" + price + ", count=" + count + '}';
     }
-            
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-               
     
+    public String getAsCSV() {
+    return inv.getCstID() + "," + product + "," + price + "," + count;
+            
+   
+    
+}
 }

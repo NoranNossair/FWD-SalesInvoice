@@ -6,7 +6,6 @@ package View;
 
 import Controller.InvController;
 import Model.Invoice_Header;
-import Model.Invoice_Line;
 import Model.InvoicesTableModel;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -48,6 +47,7 @@ public class SIGScreen extends javax.swing.JFrame {
         invTotalLbl = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lineTable = new javax.swing.JTable();
+        lineTable.getSelectionModel().addListSelectionListener(controller);
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         createInvBtn = new javax.swing.JButton();
@@ -87,6 +87,14 @@ public class SIGScreen extends javax.swing.JFrame {
         jLabel3.setText("Customer Name");
 
         jLabel4.setText("Invoice Total");
+
+        invNumLbl.setText("-");
+
+        invDateLbl.setText("-");
+
+        cstNameLbl.setText("-");
+
+        invTotalLbl.setText("-");
 
         lineTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,25 +157,21 @@ public class SIGScreen extends javax.swing.JFrame {
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(28, 28, 28)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cstNameLbl)
-                                .addComponent(invTotalLbl)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
-                            .addGap(30, 30, 30)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(invNumLbl)
-                                .addComponent(invDateLbl)))))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(invNumLbl)
+                            .addComponent(invDateLbl)
+                            .addComponent(cstNameLbl)
+                            .addComponent(invTotalLbl)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(createInvBtn)
@@ -189,19 +193,20 @@ public class SIGScreen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(invNumLbl))
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(invDateLbl))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(cstNameLbl))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(invTotalLbl))
                         .addGap(51, 51, 51)
@@ -214,7 +219,7 @@ public class SIGScreen extends javax.swing.JFrame {
                     .addComponent(cancelItemBtn)
                     .addComponent(deleteInvBtn)
                     .addComponent(createInvBtn))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -288,8 +293,8 @@ public class SIGScreen extends javax.swing.JFrame {
     private javax.swing.JButton saveItemBtn;
     // End of variables declaration//GEN-END:variables
     private ArrayList<Invoice_Header> invoice_Headers;
-    private InvController controller;
-    private InvoicesTableModel invoicesTableModel;
+    private InvController controller = new InvController(this);
+    public InvoicesTableModel invoicesTableModel;
 
     public JLabel getCstNameLbl() {
         return cstNameLbl;
@@ -320,17 +325,38 @@ public class SIGScreen extends javax.swing.JFrame {
     }
 
     public InvoicesTableModel getInvoicesTableModel() {
+        if (invoicesTableModel == null) {
+            invoicesTableModel = new InvoicesTableModel(getInvoice_Headers());
+        }
         return invoicesTableModel;
+    }
+    public int getNextInvoiceNum(){
+        int num = 0;
+        for (Invoice_Header invoice_Header : getInvoice_Headers()){
+            if(invoice_Header.getCstID() > num)
+                num = invoice_Header.getCstID();
+        }
+        return ++num;
     }
 
     public void setInvoicesTableModel(InvoicesTableModel invoicesTableModel) {
         this.invoicesTableModel = invoicesTableModel;
     }
-    
-    public ArrayList<Invoice_Header> getHeaders(){
-        return invoice_Headers;
-    }
-    public void setInvoice_Header(ArrayList<Invoice_Header> invoicesArray){
+
+    public void setInvoice_Headers(ArrayList<Invoice_Header> invoice_Headers) {
         this.invoice_Headers = invoice_Headers;
     }
+
+    public ArrayList<Invoice_Header> getInvoice_Headers() {
+        if (invoice_Headers == null) invoice_Headers = new ArrayList<>();
+        return invoice_Headers;
+    }
+    
+    //public ArrayList<Invoice_Header> invoice_Headers(){
+        //return invoice_Headers;
+    //}
+    public void setInvoice_Header(ArrayList<Invoice_Header> invoice_Headers){
+        this.invoice_Headers = invoice_Headers;
+    }
+
 }

@@ -5,7 +5,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -16,7 +15,11 @@ public class Invoice_Header {
     private int cstID;
     private String date;
     private String name;
-    private ArrayList<Invoice_Line> lines;
+    public ArrayList<Invoice_Line> lines;
+
+    public Invoice_Header() {
+    }
+    
    
 
     public Invoice_Header(int cstID, String date, String name) {
@@ -24,13 +27,14 @@ public class Invoice_Header {
         this.date = date;
         this.name = name;
     }
-    public double getTotal(){
-        double Total = 0.0;
-        for (int i=0; i< lines.size();i++){
-            Invoice_Line line= lines.get(i);
-            Total +=line.getTotal();
+    
+    
+        public double getTotal(){
+        double total = 0.0;
+        for (Invoice_Line invoice_Line : getLines()) {
+            total += invoice_Line.getLineTotal();
         }
-        return Total;
+        return total;
     }
     public ArrayList<Invoice_Line> getLines() {
         if (lines == null){
@@ -65,9 +69,24 @@ public class Invoice_Header {
 
     @Override
     public String toString() {
-        return "Invoice_Header{" + "cstID=" + cstID + ", date=" + date + ", name=" + name + '}';
+    return "Invoice_Header {" + "cstID=" + cstID + ", date=" + date + ", name=" + name + '}';     
     }
+    public String getAsCSV() {
+    return cstID + "," + date + "," + name;
+    }
+}    
+//}
+    /*public Invoice_Header(int cstID, String date, String name, double Total, ArrayList<Invoice_Line> lines) {
+        this.cstID = cstID;
+        this.date = date;
+        this.name = name;
+        this.getTotal();
+        this.lines = lines;
+    
+}*/
+
     
     
     
-}
+
+   
