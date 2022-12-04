@@ -54,10 +54,10 @@ public class SIGScreen extends javax.swing.JFrame {
         createInvBtn.addActionListener(controller);
         deleteInvBtn = new javax.swing.JButton();
         deleteInvBtn.addActionListener(controller);
-        saveItemBtn = new javax.swing.JButton();
-        saveItemBtn.addActionListener(controller);
-        cancelItemBtn = new javax.swing.JButton();
-        cancelItemBtn.addActionListener(controller);
+        createItemBtn = new javax.swing.JButton();
+        createItemBtn.addActionListener(controller);
+        deleteItemBtn = new javax.swing.JButton();
+        deleteItemBtn.addActionListener(controller);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         loadFileBtn = new javax.swing.JMenuItem();
@@ -124,9 +124,15 @@ public class SIGScreen extends javax.swing.JFrame {
 
         deleteInvBtn.setText("Delete Invoice");
 
-        saveItemBtn.setText("Save");
+        createItemBtn.setText("Create");
+        createItemBtn.setActionCommand("Create");
+        createItemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createItemBtnActionPerformed(evt);
+            }
+        });
 
-        cancelItemBtn.setText("Cancel");
+        deleteItemBtn.setText("Delete");
 
         jMenu1.setText("File");
 
@@ -178,9 +184,9 @@ public class SIGScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(deleteInvBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(saveItemBtn)
+                .addComponent(createItemBtn)
                 .addGap(62, 62, 62)
-                .addComponent(cancelItemBtn)
+                .addComponent(deleteItemBtn)
                 .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
@@ -215,8 +221,8 @@ public class SIGScreen extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveItemBtn)
-                    .addComponent(cancelItemBtn)
+                    .addComponent(createItemBtn)
+                    .addComponent(deleteItemBtn)
                     .addComponent(deleteInvBtn)
                     .addComponent(createInvBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -232,6 +238,10 @@ public class SIGScreen extends javax.swing.JFrame {
     private void saveFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_saveFileBtnActionPerformed
+
+    private void createItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createItemBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createItemBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,10 +279,11 @@ public class SIGScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelItemBtn;
     private javax.swing.JButton createInvBtn;
+    private javax.swing.JButton createItemBtn;
     private javax.swing.JLabel cstNameLbl;
     private javax.swing.JButton deleteInvBtn;
+    private javax.swing.JButton deleteItemBtn;
     private javax.swing.JTable headerTable;
     private javax.swing.JLabel invDateLbl;
     private javax.swing.JLabel invNumLbl;
@@ -290,7 +301,6 @@ public class SIGScreen extends javax.swing.JFrame {
     private javax.swing.JTable lineTable;
     private javax.swing.JMenuItem loadFileBtn;
     private javax.swing.JMenuItem saveFileBtn;
-    private javax.swing.JButton saveItemBtn;
     // End of variables declaration//GEN-END:variables
     private ArrayList<Invoice_Header> invoice_Headers;
     private InvController controller = new InvController(this);

@@ -19,7 +19,7 @@ public class LinesTableModel extends AbstractTableModel{
     }
     //public ArrayList<Invoice_Line> invLines;
 
-    public ArrayList<Invoice_Line> getInvoice_Lines() {
+    public ArrayList<Invoice_Line> getLines() {
         return invoice_Lines;
     }
     

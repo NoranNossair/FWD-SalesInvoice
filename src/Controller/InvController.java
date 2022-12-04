@@ -54,10 +54,10 @@ public class InvController implements ActionListener,ListSelectionListener {
                 case "Delete Invoice":
                     deleteInvoice();
                     break;
-                case "Save":
+                case "Create":
                     createNewItem();
                     break;
-                case "Cancel":
+                case "Delete":
                     deleteItem();
                     break;
                 case "createInvoiceCancel":
@@ -216,7 +216,7 @@ public class InvController implements ActionListener,ListSelectionListener {
             //LinesTableModel linesTableModel = new LinesTableModel(invoice_Header.getLines());
             //frame.getLineTable().setModel(linesTableModel);
             LinesTableModel linesTableModel = (LinesTableModel) frame.getLineTable().getModel();
-            linesTableModel.getInvoice_Lines().remove(selectedRow);
+            linesTableModel.getLines().remove(selectedRow);
             linesTableModel.fireTableDataChanged();
             frame.getInvoicesTableModel().fireTableDataChanged();
         }
