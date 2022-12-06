@@ -31,12 +31,12 @@ public class Invoice_Header {
     
         public double getTotal(){
         double total = 0.0;
-        for (Invoice_Line invoice_Line : getLines()) {
+        for (Invoice_Line invoice_Line : invoice_Lines()) {
             total += invoice_Line.getLineTotal();
         }
         return total;
     }
-    public ArrayList<Invoice_Line> getLines() {
+    public ArrayList<Invoice_Line> invoice_Lines() {
         if (lines == null){
             lines = new ArrayList<>();
         }
