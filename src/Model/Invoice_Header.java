@@ -15,7 +15,7 @@ public class Invoice_Header {
     private int cstID;
     private String date;
     private String name;
-    public ArrayList<Invoice_Line> lines;
+    public ArrayList<Invoice_Line> invoice_Lines;
 
     public Invoice_Header() {
     }
@@ -31,17 +31,28 @@ public class Invoice_Header {
     
         public double getTotal(){
         double total = 0.0;
-        for (Invoice_Line invoice_Line : invoice_Lines()) {
+        for (Invoice_Line invoice_Line : getLines()) {
             total += invoice_Line.getLineTotal();
         }
         return total;
     }
-    public ArrayList<Invoice_Line> invoice_Lines() {
+
+    public void setLines(ArrayList<Invoice_Line> invoice_Lines) {
+        this.invoice_Lines = invoice_Lines;
+    }
+
+    public ArrayList<Invoice_Line> getLines() {
+        if (invoice_Lines == null){
+            invoice_Lines = new ArrayList<>();
+        }
+        return invoice_Lines;
+    }
+   /* public ArrayList<Invoice_Line> invoice_Lines() {
         if (lines == null){
             lines = new ArrayList<>();
         }
         return lines;
-    }
+    }*/
 
     public String getName() {
         return name;

@@ -90,7 +90,7 @@ public class InvController implements ActionListener,ListSelectionListener {
         frame.getInvTotalLbl().setText("" + currentInvoice.getTotal());
         //LinesTableModel linesTableModel = new LinesTableModel(currentInvoice.getLines());
         //ArrayList<Invoice_Line> linesTableModel = new ArrayList<Invoice_Line>(currentInvoice.getLines());
-        LinesTableModel linesTableModel = new LinesTableModel(currentInvoice.invoice_Lines());
+        LinesTableModel linesTableModel = new LinesTableModel(currentInvoice.getLines());
         frame.getLineTable().setModel(linesTableModel);
         linesTableModel.fireTableDataChanged();
         }
@@ -133,7 +133,7 @@ public class InvController implements ActionListener,ListSelectionListener {
                         }
                     }
                     Invoice_Line line= new Invoice_Line(itemName, itemPrice, count, inv);
-                    inv.invoice_Lines().add(line);
+                    inv.getLines().add(line);
                     }
                     System.out.println("read");
                 }
@@ -156,7 +156,7 @@ public class InvController implements ActionListener,ListSelectionListener {
                 String invCsv = invoice_Header.getAsCSV();
                 headers += invCsv;
                 headers += "\n";
-                for(Invoice_Line invoice_Line : invoice_Header.invoice_Lines()){
+                for(Invoice_Line invoice_Line : invoice_Header.invoice_Lines){
                     String lineCSV = invoice_Line.getAsCSV();
                     lines += lineCSV;
                     lines += "\n"; 
@@ -205,17 +205,19 @@ public class InvController implements ActionListener,ListSelectionListener {
     }
 
     private void deleteItem() {
-        //int selectedInv = frame.getHeaderTable().getSelectedRow();
+        int selectedInv = frame.getHeaderTable().getSelectedRow();
         int selectedRow = frame.getLineTable().getSelectedRow();
-        if (selectedRow != -1){
-            //Invoice_Header invoice_Header = frame.getHeaders().get(selectedInv);
-            //invoice_Header.getLines().remove(selectedRow);
-            //LinesTableModel linesTableModel = new LinesTableModel(invoice_Header.getLines());
-            //frame.getLineTable().setModel(linesTableModel);
-            LinesTableModel linesTableModel = (LinesTableModel) frame.getLineTable().getModel();
-            linesTableModel.getInvoice_Lines().remove(selectedRow);
+        if (selectedInv != -1 && selectedRow != -1){
+        //if (selectedRow != -1){
+            Invoice_Header invoice_Header = frame.getInvoice_Headers().get(selectedInv);
+            invoice_Header.getLines().remove(selectedRow);
+            //LinesTableModel linesTableModel = (LinesTableModel) frame.getLineTable().getModel();
+            LinesTableModel linesTableModel = new LinesTableModel(invoice_Header.getLines());
+            frame.getLineTable().setModel(linesTableModel);
             linesTableModel.fireTableDataChanged();
-            frame.getInvoicesTableModel().fireTableDataChanged();
+            //linesTableModel.getLines().remove(selectedRow);
+            //frame.getInvoicesTableModel().fireTableDataChanged();
+             
         }
         
     }
@@ -248,7 +250,7 @@ public class InvController implements ActionListener,ListSelectionListener {
         if (selectedInvoice != -1){
         Invoice_Header invoice_Header = frame.getInvoice_Headers().get(selectedInvoice);
         Invoice_Line invoice_Line = new Invoice_Line(item, price, count, invoice_Header);
-        invoice_Header.invoice_Lines().add(invoice_Line);
+        invoice_Header.invoice_Lines.add(invoice_Line);
         LinesTableModel linesTableModel = (LinesTableModel)frame.getLineTable().getModel();
         //linesTableModel.getInvoice_Lines().add(invoice_Line);
         linesTableModel.fireTableDataChanged();

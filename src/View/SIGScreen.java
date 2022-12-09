@@ -47,7 +47,6 @@ public class SIGScreen extends javax.swing.JFrame {
         invTotalLbl = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lineTable = new javax.swing.JTable();
-        lineTable.getSelectionModel().addListSelectionListener(controller);
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         createInvBtn = new javax.swing.JButton();
@@ -78,6 +77,7 @@ public class SIGScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        headerTable.setToolTipText("");
         jScrollPane1.setViewportView(headerTable);
 
         jLabel1.setText("Invoice Number");
